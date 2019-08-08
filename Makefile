@@ -78,7 +78,10 @@ deploy:
 	#curl -F file=@"$(APP_DMG_FILEPATH)" -F title="$(APP_DMG_FILENAME)" -F filename="$(APP_DMG_FILEPATH)" -F channels=#$(SLACK_CHANNEL_TESTS) -F token=$(SLACK_API_TOKEN) https://slack.com/api/files.upload
 	@echo \n
 	curl -X POST http://localhost:3005/upload/file -F file=@$(APP_ZIPFILE)
+
+	@echo \n
 	curl -X POST http://localhost:3005/upload/file -F file=@$(APP_UPDATER_CAST)
+	
 	@echo \n
 
 report:
