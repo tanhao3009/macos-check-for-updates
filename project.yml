@@ -1,0 +1,56 @@
+name: OsxCheckForUpdates
+options:
+  minimumXcodeGenVersion: 2.2.0
+configFiles:
+  Debug: configs/Debug.xcconfig
+  Release: configs/Release.xcconfig
+targets:
+  OsxCheckForUpdates:
+    platform: macOS
+    type: application
+    sources:
+      - OsxCheckForUpdates
+    configFiles:
+      Debug: configs/OsxCheckForUpdates-Debug.xcconfig
+      Release: configs/OsxCheckForUpdates-Release.xcconfig
+    dependencies:
+      - target: Core
+      - carthage: Sparkle
+    scheme:
+      environmentVariables:
+        ENABLE_SIGNPOST: YES
+  OsxCheckForUpdatesTests:
+    platform: macOS
+    type: bundle.unit-test
+    configFiles:
+      Debug: configs/OsxCheckForUpdatesTests-Debug.xcconfig
+      Release: configs/OsxCheckForUpdatesTests-Release.xcconfig
+    sources:
+      - Tests/
+    dependencies:
+      - target: OsxCheckForUpdates
+      - target: Core
+    scheme:
+      testTargets:
+        - OsxCheckForUpdatesTests
+      gatherCoverageData: true
+  Core:
+    platform: macOS
+    type: framework
+    sources:
+      - Core/
+    configFiles:
+      Debug: configs/Core.xcconfig
+      Release: configs/Core.xcconfig
+  #macOS command line tool
+  Ed25519SparkleHelper:
+    platform: macOS
+    type: tool
+    sources:
+      - Ed25519SparkleHelper
+    configFiles:
+      Debug: configs/Ed25519SparkleHelper-Debug.xcconfig
+      Release: configs/Ed25519SparkleHelper-Release.xcconfig
+    scheme:
+      environmentVariables:
+        ENABLE_SIGNPOST: YES
