@@ -2,11 +2,11 @@
 # Usages
 - Clone the repository
 ```
-git clone https://github.com/hungtq287/macos-check-for-updates.git <project_name>
+$ git clone https://github.com/htq287/macos-check-for-updates.git backend
 ```
 - Install dependencies
 ```
-cd <project_name>/Backend
+cd backend
 npm install
 ```
 - Build and run the project
