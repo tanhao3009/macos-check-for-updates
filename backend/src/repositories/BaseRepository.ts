@@ -28,12 +28,7 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
       if(!this.lokiCollection)  {
         this.lokiCollection = Database.shared().lokidb.addCollection(this.collectionName, {});
       }
-      //console.log(this.lokiCollection);
-      console.log(collectionName);
-      console.log('Constructor: Initialized!');
     });
-
-    console.log('Constructor: Initialized!___2');
   }
 
   async save(item?: T, callback?: (err: any) => void): Promise<boolean> {

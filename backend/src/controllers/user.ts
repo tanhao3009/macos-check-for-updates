@@ -7,7 +7,6 @@ export const postSignup = (req: Request, res: Response, next: NextFunction) => {
   user.setPassword(req.body.user.password);
   user.save((err) => {
     if (err) { return next(err); }
-    console.log(user);
     return res.json({user: user.toAuthJSON()});
   });
 };
