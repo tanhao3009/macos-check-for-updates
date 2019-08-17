@@ -1,17 +1,19 @@
-import * as express from 'express'
+// import * as express from 'express'
 import Loki from 'lokijs';
-import { Collection } from 'lokijs';
+//import { Collection } from 'lokijs';
 
 // import all interfaces
 import { IRead } from './interfaces/IRead';
 import { IWrite } from './interfaces/IWrite';
 
-const DB_NAME = 'db.json';
-const UPLOAD_PATH = 'tmp/uploads';
+// const DB_NAME = 'db.json';
+// const UPLOAD_PATH = 'tmp/uploads';
 
-// loki configs
-console.log(`${UPLOAD_PATH}/${DB_NAME}`);
-export const database = new Loki(`${UPLOAD_PATH}/${DB_NAME}`, { persistenceMethod: 'fs' });
+// // loki configs
+// console.log(`${UPLOAD_PATH}/${DB_NAME}`);
+// export const database = new Loki(`${UPLOAD_PATH}/${DB_NAME}`, { persistenceMethod: 'fs' });
+
+import Database from '../config/database';
 
 // class can only be extended
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
@@ -20,10 +22,11 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
 
   constructor(collectionName: string) {
     this.collectionName = collectionName;
-    database.loadDatabase({}, () => {
-      this.lokiCollection = database.getCollection(this.collectionName);
+    
+    Database.shared().lokidb.loadDatabase({}, () => {
+      this.lokiCollection = Database.shared().lokidb.getCollection(this.collectionName);
       if(!this.lokiCollection)  {
-        this.lokiCollection = database.addCollection(this.collectionName, {});
+        this.lokiCollection = Database.shared().lokidb.addCollection(this.collectionName, {});
       }
 
       console.log('Constructor: Initialized!');
@@ -33,7 +36,7 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
   async create(item: any): Promise<boolean> {
     try {
       var data = this.lokiCollection.insert(item);
-      database.saveDatabase();
+      Database.shared().lokidb.saveDatabase();
       console.log('id = %s', data.$loki);
     } catch (err) {
       console.log('Failed to create item');
