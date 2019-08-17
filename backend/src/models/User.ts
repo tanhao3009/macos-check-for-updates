@@ -4,6 +4,17 @@ import uniqueValidator from 'mongoose-unique-validator';
 import crypto from 'crypto';
 import { SESSION_SECRET } from '../utils/secrets';
 
+export type UserDocument = mongoose.Document & {
+  email: string;
+  password: string;
+
+  validPassword: validPasswordFunction;
+  setPassword: (password) => {};
+  toAuthJSON: () => {};
+};
+
+type validPasswordFunction = (password: string) => boolean;
+
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   hash: String,
@@ -41,4 +52,4 @@ userSchema.methods.toAuthJSON = function(){
   };
 };
 
-mongoose.model('User', userSchema);
+export const User = mongoose.model<UserDocument>("User", userSchema);
