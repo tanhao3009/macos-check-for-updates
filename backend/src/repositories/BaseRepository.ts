@@ -18,7 +18,7 @@ import Database from '../config/database';
 // class can only be extended
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
   public collectionName: string;
-  private lokiCollection: Loki.Collection;
+  public lokiCollection: Loki.Collection;
 
   constructor(collectionName: string) {
     this.collectionName = collectionName;
@@ -28,9 +28,17 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
       if(!this.lokiCollection)  {
         this.lokiCollection = Database.shared().lokidb.addCollection(this.collectionName, {});
       }
-
+      //console.log(this.lokiCollection);
+      console.log(collectionName);
       console.log('Constructor: Initialized!');
     });
+
+    console.log('Constructor: Initialized!___2');
+  }
+
+  async save(item?: T, callback?: (err: any) => void): Promise<boolean> {
+    callback(null);
+    return true;
   }
 
   async create(item: any): Promise<boolean> {

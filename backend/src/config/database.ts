@@ -9,6 +9,7 @@ export default class Database {
 
   private constructor() {
     this.lokidb = new Loki(`${UPLOAD_PATH}/${DB_NAME}`, { persistenceMethod: 'fs' });
+    //this.lokidb.saveDatabase();
   }
 
   public static shared(): Database {

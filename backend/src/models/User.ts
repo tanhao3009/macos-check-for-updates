@@ -4,10 +4,8 @@ export class User {
   private passwordResetToken: string;
   private passwordResetExpires: Date;
 
-  constructor(email: string, password: string, passwordResetToken: string, passwordResetExpires: Date) {
+  constructor(email: string, password: string) {
     this.email = email;
     this.password = password;
-    this.passwordResetToken = passwordResetToken;
-    this.passwordResetExpires = passwordResetExpires;
   }
 }
