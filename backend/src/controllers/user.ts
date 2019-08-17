@@ -1,15 +1,13 @@
 import { Request, Response, NextFunction, response } from "express";
-import { UserRepository } from '../repositories/UserRepository';
-import { User } from '../models/User';
 
-const repository = new UserRepository('user');
+//const repository = new UserRepository('user');
 
-console.log(repository);
+//console.log(repository);
 
 export const postSignup = (req: Request, res: Response, next: NextFunction) => {
-  var user = new User(req.body.user.email, req.body.user.password);
+  //var user = new User(req.body.user.email, req.body.user.password);
 
-  repository.save(user, (err) => {
-    res.json({"user": user, "error": err});
-  });
+  // repository.save(user, (err) => {
+  //   res.json({"user": user, "error": err});
+  // });
 };
