@@ -6,11 +6,11 @@ import { SESSION_SECRET } from '../utils/secrets';
 
 export type UserDocument = mongoose.Document & {
   email: string;
-  password: string;
-
+  token: any;
   validPassword: validPasswordFunction;
   setPassword: (password) => {};
   toAuthJSON: () => {};
+  generateJWT: () => {};
 };
 
 type validPasswordFunction = (password: string) => boolean;
