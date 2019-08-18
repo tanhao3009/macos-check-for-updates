@@ -1,4 +1,5 @@
 import multer = require('multer');
+import path from "path";
 import mongo from "connect-mongo";
 import mongoose from "mongoose";
 import session from "express-session";
@@ -52,6 +53,9 @@ app.use(session({
 app.use((req, res, next) => {
   next();
 });
+
+app.set("views", path.join(__dirname, "../views"));
+app.set("view engine", "pug");
 
 
 /**
