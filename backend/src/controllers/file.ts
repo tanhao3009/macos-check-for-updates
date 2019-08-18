@@ -1,6 +1,8 @@
 import multer = require('multer');
 import { Request, Response, NextFunction } from 'express'
 import { fileFilter, loadCollection, cleanFolder } from '../utils/utils';
+import { EMAIL_SENDER, EMAIL_SENDER_PASSWORD } from '../utils/secrets';
+import Mail from '../utils/Mail';
 
 import * as path from 'path'
 import * as fs from 'fs'
@@ -45,6 +47,9 @@ export let uploadMultiFiles = upload.array('files', 12);
   file.mimetype = fileUploaded.mimetype;
   file.save((err) => {
     if (err) { return next(err); }
+
+    let mail = new Mail(EMAIL_SENDER, EMAIL_SENDER_PASSWORD);
+    mail.sendMail('New Release', 'The notification of new release', ['hungtq@flomail.net']);
     return res.json({file: file.toJSON()});
   });
 
