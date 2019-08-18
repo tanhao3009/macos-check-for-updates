@@ -12,7 +12,7 @@ import { MONGODB_URI, SESSION_SECRET } from "./utils/secrets";
 // Controllers (route handlers)
 import * as homeController from './controllers/home';
 import * as userController from './controllers/user';
-import * as uploadController from './controllers/file';
+import * as fileController from './controllers/file';
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -58,9 +58,9 @@ app.get('/', homeController.getUsages);
 app.post('/signup', userController.postSignup);
 app.post('/login', userController.postLogin);
 
-app.get('/files/:id', uploadController.getFile);
-app.get('/files', uploadController.getFiles);
-app.post('/upload/file', uploadController.uploadSingleFile, uploadController.uploadFile);
-app.post('/upload/files', uploadController.uploadMultiFiles, uploadController.uploadFiles);
+app.get('/files/:id', fileController.getFile);
+app.get('/files', fileController.getFiles);
+app.post('/upload/file', fileController.uploadSingleFile, fileController.uploadFile);
+app.post('/upload/files', fileController.uploadMultiFiles, fileController.uploadFiles);
 
 export default app;
