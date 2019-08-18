@@ -28,9 +28,9 @@ const fileSchema = new mongoose.Schema({
 
 fileSchema.plugin(uniqueValidator, {message: 'File already existed.'});
 
-fileSchema.methods.toJSON = () => {
+fileSchema.methods.toJSON = function() {
   return {
-    fileName: this.filename,
+    fileName: this.fileName,
     originalname: this.originalname,
     mimetype: this.mimetype
   };
