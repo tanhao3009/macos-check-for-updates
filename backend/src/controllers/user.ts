@@ -31,7 +31,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     if (!user) {
         return res.status(422).json(info);
     }
-    console.log(user);
+
     user.token = user.generateJWT();
     return res.json({user: user.toAuthJSON()});
   })(req, res, next);

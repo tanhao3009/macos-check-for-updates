@@ -32,6 +32,9 @@ declare module 'express' {
   }
 }
 
+import './models/User';
+import 'passport';
+
 app.set("port", process.env.PORT || 3001);
 app.use(bodyParser.json());
 app.use(flash());
