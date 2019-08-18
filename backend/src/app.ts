@@ -49,18 +49,30 @@ app.use(session({
   })
 }));
 
+app.use((req, res, next) => {
+  next();
+});
+
 
 /**
  * Primary APIs
  */
 app.get('/', homeController.getUsages); 
 
-app.post('/signup', userController.postSignup);
-app.post('/login', userController.postLogin);
+/**
+ * auth api
+ * POST / http://localhost:3005/drive/api/signup
+ * POST / http://localhost:3005/drive/api/login
+ */
+app.post('/drive/api/signup', userController.postSignup);
+app.post('/drive/api/login', userController.postLogin);
 
-app.get('/files/:id', fileController.getFile);
-app.get('/files', fileController.getFiles);
-app.post('/upload/file', fileController.uploadSingleFile, fileController.uploadFile);
-app.post('/upload/files', fileController.uploadMultiFiles, fileController.uploadFiles);
+/**
+ * file api
+ * POST / http://localhost:3005/drive/api/files
+ * GET / http://localhost:3005/drive/v3/files/fileId
+ */
+app.post('/drive/api/files', fileController.uploadSingleFile, fileController.uploadFile);
+app.get('/drive/api/files/:fileId', fileController.getFile);
 
 export default app;

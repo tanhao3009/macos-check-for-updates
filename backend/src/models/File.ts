@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 
 export type FileDocument = mongoose.Document & {
-  originalname: string;
+  originalName: string;
   fileName: string;
   mimetype: string;
   toJSON: () => {};
@@ -31,7 +31,7 @@ fileSchema.plugin(uniqueValidator, {message: 'File already existed.'});
 fileSchema.methods.toJSON = function() {
   return {
     fileName: this.fileName,
-    originalname: this.originalname,
+    originalName: this.originalName,
     mimetype: this.mimetype
   };
 };
