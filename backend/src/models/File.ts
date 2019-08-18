@@ -9,7 +9,7 @@ export type FileDocument = mongoose.Document & {
 };
 
 const fileSchema = new mongoose.Schema({
-  originalname: { type: String, unique: true },
+  originalName: { type: String, unique: true },
   fileName: String,
   mimetype: String
 }, { timestamps: true });
