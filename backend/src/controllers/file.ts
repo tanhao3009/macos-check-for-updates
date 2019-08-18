@@ -8,6 +8,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 
 import { File, FileDocument } from '../models/File';
+import { User, UserDocument } from '../models/User';
 
 const UPLOAD_PATH = 'tmp/uploads/';
 
@@ -40,20 +41,23 @@ export let uploadMultiFiles = upload.array('files', 12);
  * POST
  */
  export let uploadFile = (req: Request, res: Response, next: NextFunction) => {
-  let fileUploaded = req.file;
-  let file = new File();
-  file.filename = fileUploaded.filename;
-  file.originalname = fileUploaded.originalname;
-  file.mimetype = fileUploaded.mimetype;
-  file.save((err) => {
-    if (err) { return next(err); }
-    if(prod) {
-      let mail = new Mail(EMAIL_SENDER, EMAIL_SENDER_PASSWORD);
-      mail.sendMail('New Release', 'The notification of new release', ['hungtq@flomail.net']);
-    }
+  User.findById(req.payload.id, (err, user: UserDocument) => {
+    if (err || !user) {  return res.sendStatus(401); }
+    console.log(user);
+    let fileUploaded = req.file;
+    let file = new File();
+    file.filename = fileUploaded.filename;
+    file.originalname = fileUploaded.originalname;
+    file.mimetype = fileUploaded.mimetype;
+    file.save((err) => {
+      if (err) { return next(err); }
+      if(prod) {
+        let mail = new Mail(EMAIL_SENDER, EMAIL_SENDER_PASSWORD);
+        mail.sendMail('New Release', 'The notification of new release', ['hungtq@flomail.net']);
+      }
     return res.json({file: file.toJSON()});
   });
-
+  });
 };
 
 export let uploadFiles = (req: Request, res: Response, next: NextFunction) => {
@@ -69,7 +73,7 @@ export let getFile = async (req, res, next) => {
     if(req.params.fileId === null) {
       return res.status(422).json({errors: {file: "fileid can't be empty"}});
     }
-    
+
     File.findOne({ originalname: req.params.fileId }, (err, existingFile: FileDocument) => {
       if (err) { return next(err); }
       if (existingFile) {

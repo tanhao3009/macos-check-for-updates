@@ -14,6 +14,7 @@ import { MONGODB_URI, SESSION_SECRET } from "./utils/secrets";
 import * as homeController from './controllers/home';
 import * as userController from './controllers/user';
 import * as fileController from './controllers/file';
+import { auth } from './controllers/auth';
 
 // Create a new express application instance
 const app: express.Application = express();
@@ -29,7 +30,8 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true} ).then(
 declare module 'express' {
   interface Request {
       body: any,
-      file: any
+      file: any,
+      payload: any
   }
 }
 
@@ -76,7 +78,7 @@ app.post('/drive/api/login', userController.postLogin);
  * POST / http://localhost:3005/drive/api/files
  * GET / http://localhost:3005/drive/v3/files/fileId
  */
-app.post('/drive/api/files', fileController.uploadSingleFile, fileController.uploadFile);
+app.post('/drive/api/files', auth.required, fileController.uploadSingleFile, fileController.uploadFile);
 app.get('/drive/api/files/:fileId', fileController.getFile);
 
 export default app;
