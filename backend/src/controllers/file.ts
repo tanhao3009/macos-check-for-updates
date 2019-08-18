@@ -43,7 +43,6 @@ export let uploadMultiFiles = upload.array('files', 12);
  export let uploadFile = (req: Request, res: Response, next: NextFunction) => {
   User.findById(req.payload.id, (err, user: UserDocument) => {
     if (err || !user) {  return res.sendStatus(401); }
-    console.log(user);
     let fileUploaded = req.file;
     let file = new File();
     file.filename = fileUploaded.filename;
