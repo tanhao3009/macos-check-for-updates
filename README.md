@@ -15,10 +15,23 @@ Automatically updates macOS application to the new Version.
 git clone https://github.com/htq287/macos-check-for-updates.git backend
 ```
 - Install dependencies
-```
+```sh
 npm install
 ```
-- Build and run the project
+
+- Configure your mongoDB server
+```bash
+# create the db directory
+sudo mkdir -p /data/db
+# give the db read/write permissions
+sudo chmod 777 /data/db
+```
+- Start your mongoDB server
+```sh
+mongod
+```
+
+- Build and run the server/drive
 ```
 npm run prod
 ```
