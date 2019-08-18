@@ -42,11 +42,9 @@ export let uploadMultiFiles = upload.array('files', 12);
  export let uploadFile = (req: Request, res: Response, next: NextFunction) => {
   let fileUploaded = req.file;
   let file = new File();
-  file.fileName = fileUploaded.filename;
-  file.originalName = fileUploaded.originalname;
+  file.filename = fileUploaded.filename;
+  file.originalname = fileUploaded.originalname;
   file.mimetype = fileUploaded.mimetype;
-  console.log(fileUploaded);
-  console.log(file);
   file.save((err) => {
     if (err) { return next(err); }
     if(prod) {
@@ -68,15 +66,15 @@ export let uploadFiles = (req: Request, res: Response, next: NextFunction) => {
 
 export let getFile = async (req, res, next) => {
   try {
-    if(req.params.fileid === null) {
+    if(req.params.fileId === null) {
       return res.status(422).json({errors: {file: "fileid can't be empty"}});
     }
-
-    File.findOne({originalName: req.params.fileid}, (err, existingFile: FileDocument) => {
+    
+    File.findOne({ originalname: req.params.fileId }, (err, existingFile: FileDocument) => {
       if (err) { return next(err); }
       if (existingFile) {
         res.setHeader('Content-Type', existingFile.mimetype);
-        fs.createReadStream(path.join(UPLOAD_PATH, existingFile.fileName)).pipe(res);
+        fs.createReadStream(path.join(UPLOAD_PATH, existingFile.filename)).pipe(res);
       }
     });
   } catch {
