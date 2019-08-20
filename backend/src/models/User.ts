@@ -6,6 +6,7 @@ import { SESSION_SECRET } from '../utils/secrets';
 
 export type UserDocument = mongoose.Document & {
   email: string;
+  role: number; // 0: admin, 1: leader, 2: tester
   token: any;
   hash: string;
   salt: string;
