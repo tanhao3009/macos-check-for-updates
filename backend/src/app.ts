@@ -76,9 +76,17 @@ app.post('/drive/api/login', userController.postLogin);
 /**
  * file api
  * POST / http://localhost:3005/drive/api/files
- * GET / http://localhost:3005/drive/v3/files/fileId
+ * GET / http://localhost:3005/drive/api/files/fileId
  */
-app.post('/drive/api/files', auth.required, fileController.uploadSingleFile, fileController.uploadFile);
+app.post('upload/drive/api/files', auth.required, fileController.uploadSingleFile, fileController.uploadFile);
 app.get('/drive/api/files/:fileId', fileController.getFile);
+
+/**
+ * users api
+ * POST / http://localhost:3005/drive/api/users
+ * GET / http://localhost:3005/drive/api/users
+ */
+app.post('/drive/api/users', auth.required, userController.postUsers);
+app.get('/drive/api/users', auth.required, userController.getUsers);
 
 export default app;

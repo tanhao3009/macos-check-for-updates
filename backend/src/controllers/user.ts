@@ -36,3 +36,11 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     return res.json({user: user.toAuthJSON()});
   })(req, res, next);
 };
+
+export const postUsers = (req: Request, res: Response, next: NextFunction) => {
+  res.send('post Users');
+};
+
+export const getUsers = (req: Request, res: Response, next: NextFunction) => {
+  res.send('get users');
+};
