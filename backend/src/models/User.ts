@@ -7,6 +7,8 @@ import { SESSION_SECRET } from '../utils/secrets';
 export type UserDocument = mongoose.Document & {
   email: string;
   token: any;
+  hash: string;
+  salt: string;
   validPassword: validPasswordFunction;
   setPassword: (password) => {};
   toAuthJSON: () => {};
@@ -23,12 +25,12 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(uniqueValidator, {message: 'is already taken.'});
 
-userSchema.methods.validPassword = (password) => {
+userSchema.methods.validPassword = function(password) {
   var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
-userSchema.methods.setPassword = (password) => {
+userSchema.methods.setPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
