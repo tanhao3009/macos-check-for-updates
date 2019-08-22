@@ -78,7 +78,7 @@ app.post('/drive/api/login', userController.postLogin);
  * POST / http://localhost:3005/drive/api/files
  * GET / http://localhost:3005/drive/api/files/fileId
  */
-app.post('upload/drive/api/files', auth.required, fileController.uploadSingleFile, fileController.uploadFile);
+app.post('/upload/drive/api/files', auth.required, fileController.uploadSingleFile, fileController.uploadFile);
 app.get('/drive/api/files/:fileId', fileController.getFile);
 
 /**
