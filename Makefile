@@ -16,13 +16,16 @@ UITEST_TARGET	:= OsxCheckForUpdatesTests
 CF_DEBUG		:= ./configs/Debug.xcconfig
 CF_RELEASE		:= ./configs/Release.xcconfig
 
+# release-version
+RELEASE_VERSION	:= 0.0.2
+
 #resources for deploying
 APP_DMG_FILENAME 	:= OsxCheckForUpdates.dmg
 APP_DMG_FILEPATH 	:= $(CWD)/build/deploy/$(APP_DMG_FILENAME)
 APP_NAME 			:= OsxCheckForUpdates
 APP_FILENAME 		:= $(CWD)/build/deploy/$(APP_NAME).app
-APP_ZIPFILE			:= $(CWD)/build/deploy/$(APP_NAME).zip
-APP_UPDATER_CAST	:= $(CWD)/build/deploy/updatecast.xml
+APP_ZIPFILE			:= $(CWD)/build/deploy/$(APP_NAME)-$(RELEASE_VERSION).zip
+APP_UPDATER_CAST	:= $(CWD)/build/deploy/appcast.xml
 
 
 #report
@@ -30,7 +33,10 @@ REPORT := OsxCheckForUpdates_Unit_Testing_Report.txt
 
 #slack
 SLACK_CHANNEL_TESTS	:= tests
-SLACK_API_TOKEN := xoxp-xxx
+SLACK_API_TOKEN := xoxp-xxx # Legacy token
+
+#drive
+JWT_TOKEN	:= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkNWNiYmE5N2ExMTQ0YTFhYzcxM2I0NSIsImVtYWlsIjoiaHVuZ3RxQGZsb21haWwubmV0IiwiZXhwIjoxNTcxNTQyNDQ2LjgxNywiaWF0IjoxNTY2MzU4NDQ2fQ.lwrQy7YV0uttQFjgw1QplFQgfDDxBDlUqX8KW3JyAiE
 
 print:
 	@echo WELLCOME
@@ -61,10 +67,10 @@ release: clean build
 	#create DMG file
 	@mkdir -p $(BUILD_DIR)/deploy
 	cp -r $(BUILD_DIR)/$(TARGET).app $(BUILD_DIR)/deploy
-	#cd scripts && pwd && ./create-dmg
+	# cd scripts && pwd && ./create-dmg
 
 	# Create updater.xlm (Sparkle format)
-	cp -r ./OsxCheckForUpdates/Sources/Starter/updatecast.xml $(BUILD_DIR)/deploy
+	cp -r ./OsxCheckForUpdates/Sources/Starter/appcast.xml $(BUILD_DIR)/deploy
 
 		#zip resources
 	@echo $(APP_NAME)
@@ -77,10 +83,10 @@ release: clean build
 deploy: 
 	#curl -F file=@"$(APP_DMG_FILEPATH)" -F title="$(APP_DMG_FILENAME)" -F filename="$(APP_DMG_FILEPATH)" -F channels=#$(SLACK_CHANNEL_TESTS) -F token=$(SLACK_API_TOKEN) https://slack.com/api/files.upload
 	@echo \n
-	curl -X POST http://localhost:3005/upload/file -F file=@$(APP_ZIPFILE)
+	curl -X POST http://localhost:3005/upload/drive/api/files -F file=@$(APP_ZIPFILE) -H 'authorization: Token $(JWT_TOKEN)'
 
 	@echo \n
-	curl -X POST http://localhost:3005/upload/file -F file=@$(APP_UPDATER_CAST)
+	curl -X POST http://localhost:3005/upload/drive/api/files -F file=@$(APP_UPDATER_CAST) -H 'authorization: Token $(JWT_TOKEN)'
 	
 	@echo \n
 

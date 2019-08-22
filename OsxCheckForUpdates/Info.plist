@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.9.5</string>
+	<string>0.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>1.9.5</string>
+	<string>0.0.1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSAppTransportSecurity</key>
@@ -36,7 +36,7 @@
 	<key>SUEnableSystemProfiling</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://localhost:3005/files/updatecast.xml</string>
+	<string>http://localhost:3005/drive/api/files/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>eRFPLZuNM6m8bltmtpPX4fzKbufI1z6rKJHtgIIsllk=</string>
 </dict>

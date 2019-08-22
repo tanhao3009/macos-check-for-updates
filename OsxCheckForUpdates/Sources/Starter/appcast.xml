@@ -5,7 +5,7 @@
     <description>Most recent changes with links to updates.</description>
     <language>en</language>
       <item>
-        <title>Version 2.0</title>
+        <title>Version 0.0.1</title>
         <description>
           <![CDATA[
             <ul>
@@ -17,7 +17,7 @@
           ]]>
         </description>
         <pubDate>Sat, 26 Jul 2014 15:20:11 +0000</pubDate>
-        <enclosure url="http://localhost:3005/files/OsxCheckForUpdates.zip" sparkle:version="2.0" length="$INSERT_ARCHIVE_LENGTH" type="application/octet-stream" sparkle:edSignature="$INSERT_EDDSA_SIGNATURE" sparkle:phasedRolloutInterval="25200" />
+        <enclosure url="http://localhost:3005/drive/api/files/OsxCheckForUpdates.zip" sparkle:version="2.0" length="$INSERT_ARCHIVE_LENGTH" type="application/octet-stream" sparkle:edSignature="$INSERT_EDDSA_SIGNATURE" sparkle:phasedRolloutInterval="25200" />
       </item>
   </channel>
 </rss>
